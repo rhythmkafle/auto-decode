@@ -1,0 +1,379 @@
+:root {
+  --bg: #f3ede0;
+  --surface: rgba(255, 250, 241, 0.84);
+  --surface-strong: rgba(255, 247, 234, 0.97);
+  --line: rgba(64, 39, 24, 0.14);
+  --text: #2f241b;
+  --muted: #6f5b49;
+  --accent: #0e6b62;
+  --accent-strong: #084f49;
+  --warm: #c76d3a;
+  --shadow: 0 24px 80px rgba(74, 44, 24, 0.12);
+  --radius: 22px;
+  --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino,
+    serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(230, 153, 98, 0.22), transparent 34%),
+    radial-gradient(circle at bottom right, rgba(14, 107, 98, 0.2), transparent 28%),
+    linear-gradient(180deg, #f7f1e6 0%, #efe5d0 100%);
+  color: var(--text);
+  font-family: var(--serif);
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+.bg-orb {
+  position: fixed;
+  inset: auto;
+  border-radius: 999px;
+  filter: blur(20px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.bg-orb-a {
+  width: 240px;
+  height: 240px;
+  top: 8%;
+  right: 8%;
+  background: rgba(199, 109, 58, 0.2);
+  animation: drift 12s ease-in-out infinite;
+}
+
+.bg-orb-b {
+  width: 180px;
+  height: 180px;
+  left: 6%;
+  bottom: 12%;
+  background: rgba(14, 107, 98, 0.18);
+  animation: drift 14s ease-in-out infinite reverse;
+}
+
+.shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 40px 0 48px;
+}
+
+.hero {
+  padding: 24px 0 20px;
+  animation: rise 560ms ease both;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: var(--warm);
+  font-family: var(--mono);
+  font-size: 0.92rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(2.4rem, 5vw, 4.8rem);
+  line-height: 0.94;
+  max-width: 11ch;
+}
+
+.lede {
+  max-width: 62ch;
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 1.08rem;
+  line-height: 1.55;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.panel {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+  overflow: hidden;
+}
+
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.28),
+    rgba(255, 255, 255, 0)
+  );
+  pointer-events: none;
+}
+
+.panel-input,
+.panel-output,
+.panel-notes {
+  padding: 22px;
+  animation: rise 640ms ease both;
+}
+
+.panel-output {
+  animation-delay: 80ms;
+}
+
+.panel-notes {
+  margin-top: 20px;
+  background: var(--surface-strong);
+  animation-delay: 140ms;
+}
+
+.panel-head,
+.editor-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.panel-head h2,
+.editor-head h3 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.editor-head p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.actions,
+.primary-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.field {
+  display: block;
+  margin-top: 16px;
+}
+
+.field span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+input,
+textarea {
+  width: 100%;
+  border: 1px solid rgba(63, 41, 26, 0.14);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.74);
+  color: var(--text);
+  padding: 14px 15px;
+  transition: border-color 160ms ease, transform 160ms ease,
+    background-color 160ms ease;
+}
+
+textarea,
+.code-block,
+.field-pill code {
+  font-family: var(--mono);
+}
+
+textarea {
+  min-height: 260px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: rgba(14, 107, 98, 0.48);
+  background: rgba(255, 255, 255, 0.92);
+  transform: translateY(-1px);
+}
+
+button {
+  border: 0;
+  border-radius: 999px;
+  padding: 11px 16px;
+  cursor: pointer;
+  transition: transform 160ms ease, opacity 160ms ease,
+    background-color 160ms ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+#generate {
+  background: var(--accent);
+  color: #f8f5ef;
+}
+
+#generate:hover {
+  background: var(--accent-strong);
+}
+
+.ghost {
+  background: rgba(47, 36, 27, 0.06);
+  color: var(--text);
+}
+
+.ghost:hover {
+  background: rgba(47, 36, 27, 0.11);
+}
+
+.summary {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(14, 107, 98, 0.08);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.field-editor {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+#field-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.field-pill {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.field-pill span {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.field-pill code {
+  font-size: 0.9rem;
+}
+
+.code-block {
+  margin: 18px 0 0;
+  min-height: 320px;
+  max-height: 560px;
+  overflow: auto;
+  padding: 18px;
+  border-radius: 18px;
+  background: #211913;
+  color: #efe8d8;
+  line-height: 1.55;
+}
+
+.notes {
+  margin: 14px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+code {
+  font-family: var(--mono);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(12px, -16px, 0);
+  }
+}
+
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h1 {
+    max-width: 14ch;
+  }
+}
+
+@media (max-width: 640px) {
+  .shell {
+    width: min(100% - 20px, 100%);
+    padding-top: 22px;
+  }
+
+  .panel-input,
+  .panel-output,
+  .panel-notes {
+    padding: 18px;
+  }
+
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-head,
+  .editor-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

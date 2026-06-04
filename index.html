@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wazuh Decoder Builder</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <div class="bg-orb bg-orb-a" aria-hidden="true"></div>
+    <div class="bg-orb bg-orb-b" aria-hidden="true"></div>
+
+    <main class="shell">
+      <section class="hero">
+        <p class="eyebrow">Wazuh Decoder Builder</p>
+        <h1>Turn a sample log into a starter decoder.</h1>
+        <p class="lede">
+          Paste one representative log line, adjust the inferred field names if
+          needed, and copy the generated XML into
+          <code>/var/ossec/etc/decoders/local_decoder.xml</code>.
+        </p>
+      </section>
+
+      <section class="grid">
+        <div class="panel panel-input">
+          <div class="panel-head">
+            <h2>Input</h2>
+            <div class="actions">
+              <button class="ghost" id="sample-syslog" type="button">
+                Load syslog sample
+              </button>
+              <button class="ghost" id="sample-json" type="button">
+                Load JSON sample
+              </button>
+            </div>
+          </div>
+
+          <label class="field">
+            <span>Decoder name</span>
+            <input
+              id="decoder-name"
+              type="text"
+              placeholder="Optional. Example: custom_app_auth"
+              autocomplete="off"
+            />
+          </label>
+
+          <label class="field">
+            <span>Sample log</span>
+            <textarea
+              id="sample-log"
+              rows="10"
+              placeholder="Paste one raw log line here"
+            ></textarea>
+          </label>
+
+          <div class="primary-actions">
+            <button id="generate" type="button">Generate Decoder</button>
+            <button class="ghost" id="clear" type="button">Clear</button>
+          </div>
+        </div>
+
+        <div class="panel panel-output">
+          <div class="panel-head">
+            <h2>Output</h2>
+            <button class="ghost" id="copy-xml" type="button">Copy XML</button>
+          </div>
+
+          <div class="summary" id="summary">
+            Enter a log line to generate a decoder.
+          </div>
+
+          <div class="field-editor" id="field-editor" hidden>
+            <div class="editor-head">
+              <h3>Detected fields</h3>
+              <p>Rename anything before copying the decoder.</p>
+            </div>
+            <div id="field-list"></div>
+          </div>
+
+          <pre class="code-block"><code id="xml-output"></code></pre>
+        </div>
+      </section>
+
+      <section class="panel panel-notes">
+        <div class="panel-head">
+          <h2>Notes</h2>
+        </div>
+        <ul class="notes">
+          <li>
+            This generates a starter decoder. Test it with
+            <code>/var/ossec/bin/wazuh-logtest</code> before deploying.
+          </li>
+          <li>
+            Syslog-style headers map cleanly to <code>&lt;program_name&gt;</code>.
+            Non-syslog logs use a generated <code>&lt;prematch&gt;</code>.
+          </li>
+          <li>
+            JSON logs use Wazuh’s <code>JSON_Decoder</code> plugin when
+            possible.
+          </li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
